@@ -1,26 +1,25 @@
 #!/usr/env/bin python3
-#Usage: PS C:\>python .\IPparser.py .\fileTOparse
+#Usage: python .\IPparser.py .\fileTOparse
 #searches for all IPv4 addresses
 
-import re
+import re, sys
 from collections import Counter
-import sys
 
-print('		IP Addresses in the Logs')
-print('		========================')
+print('	IPv4 Addresses in the Logs ')
+print('=' * 50)
 def log_reader(logfile):
-    rex = r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
+    rex = r'([^-/\D]\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}[^-/])'
 
     with open(logfile) as file:
         log = file.read()
         ip_list = re.findall(rex,log)
         ipcount = Counter(ip_list)
         for a, b in ipcount.items():
-            print("IPv4" + "== " + str(a) + "	" + "Count "  + "== " + str(b))
+            print( "Count = " + str(b) + "	   " + str(a))
 
 
 if __name__ == '__main__':
     log_reader(sys.argv[1])
 	
 
-print('		=========================')
+print('=' * 50)
