@@ -1,25 +1,25 @@
 #!/usr/env/bin python3
-#Usage: PS C:\>python .\URLparser.py .\fileToparse
+#Usage: python .\URLparser.py .\fileToparse
 #searches for all URLs
 
-import re
+import re, sys
 from collections import Counter
-import sys
 
-print('			URLs in the Logs    	')
-print('		========================')
+
+print('			URLs in the Logs	')
+print('=' * 50)
 def log_reader(logfile):
-    rex = r'([a-z][:\-\.\w\/]+?\.([a-z]+?)(:*\d*)/\S)'
+    rex = r'([a-zA-Z0-9\.\/\?\:@\-_=#]+\.([a-zA-Z]){2,9}([a-zA-Z0-9\.\&\/\?\:@\-_=#])*)'
 
     with open(logfile) as file:
         log = file.read()
         url_list = re.findall(rex,log)
         urlcount = Counter(url_list)
         for a, b in urlcount.items():
-            print("Domain " + "== " + str(a) + "	" + "Count "  + "== " + str(b))
+            print( "Count = " + str(b) + "	   " + str(a))
 
 			
 if __name__ == '__main__':
     log_reader(sys.argv[1])
 	
-print('		========================')
+print('=' * 50)
